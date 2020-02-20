@@ -53,10 +53,12 @@ class OAuth2ClientApi[ProfileResponse: Decoder, AccessTokenResponse: Decoder]
 
   protected[security] def handlingResponse[T](response: Response[Either[ResponseError[Error], T]], clientErrorMessage: String): Future[Response[Either[ResponseError[Error], T]]] = {
     if (response.code.isClientError) {
+      logger.debug(s"Handling ClientError response: ${response}, error: ${clientErrorMessage}")
       Future.failed(throw OAuth2AccessTokenRejection(clientErrorMessage))
     } else if (response.isSuccess) {
       Future.successful(response)
     } else {
+      logger.debug(s"Handling ServerError response: ${response}")
       Future.failed(throw OAuth2ServerError(s"OAuth2 Server error: ${response}"))
     }
   }
