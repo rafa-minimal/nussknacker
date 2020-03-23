@@ -1,6 +1,7 @@
 Setup
 ======
 50M records, running with profiling
+results for parallelism 8!
 
 Case1
 =====
@@ -26,7 +27,7 @@ Time: 50324
 Case3
 =====
 Condition: `#input.field2() % 1000000 == 0L` - compiled
-Variables: Bez meta + optymalizacja
+Variables: Without meta + optimization
 Listeners: `None`
-WYŁĄCZENIE histogramu?
+Histogram: ExponentiallyDecayingReservoir!!
 Time: 31051

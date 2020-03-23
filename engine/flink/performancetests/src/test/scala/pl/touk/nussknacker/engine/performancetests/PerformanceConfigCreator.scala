@@ -1,10 +1,6 @@
 package pl.touk.nussknacker.engine.performancetests
 
-import com.sksamuel.avro4s
-import com.sksamuel.avro4s.AvroInputStream
 import com.typesafe.config.{Config, ConfigFactory}
-import org.apache.avro.Schema
-import org.apache.flink.api.common.typeinfo.TypeInformation
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import pl.touk.nussknacker.engine.api.{CirceUtil, ProcessVersion}
 import pl.touk.nussknacker.engine.api.exception.ExceptionHandlerFactory
@@ -21,7 +17,6 @@ import pl.touk.nussknacker.engine.testing.{EmptyProcessConfigCreator, LocalModel
 import pl.touk.nussknacker.engine.util.functions.{date, geo, numeric}
 import org.apache.flink.api.scala._
 import pl.touk.nussknacker.engine.api.test.{SimpleTestDataSplit, TestParsingUtils}
-import pl.touk.nussknacker.engine.flink.util.source.EspDeserializationSchema
 
 
 object PerformanceConfigCreator extends EmptyProcessConfigCreator {
@@ -79,10 +74,3 @@ object NkBaseTest extends App {
   println(s"Total run time: ${System.currentTimeMillis() - start}")
 
 }
-
-class RawAvroDecoderDeserialization[T:avro4s.Decoder:TypeInformation](schema: Schema) extends EspDeserializationSchema[T](ba => {
-  val input = AvroInputStream.binary[T].from(ba).build(schema)
-  val result = input.iterator.next()
-  input.close()
-  result
-})
