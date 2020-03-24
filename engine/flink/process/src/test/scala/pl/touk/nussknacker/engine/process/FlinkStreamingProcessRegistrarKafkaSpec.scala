@@ -48,7 +48,7 @@ class FlinkStreamingProcessRegistrarKafkaSpec
     )
 
     ProcessTestHelpers.processInvoker.invokeWithKafka(
-      process, KafkaConfig(kafkaZookeeperServer.kafkaAddress, None, None)
+      process, KafkaConfig(kafkaZookeeperServer.kafkaAddress, None, None, None)
     ) {
       val keys = 10
       val slides = 100
