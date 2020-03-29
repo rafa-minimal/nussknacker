@@ -9,7 +9,7 @@ import org.apache.flink.streaming.api.functions.sink.SinkFunction
 import org.apache.flink.streaming.api.functions.source.SourceFunction
 import org.apache.flink.streaming.api.scala._
 import pl.touk.nussknacker.engine.api.{MethodToInvoke, ParamName}
-import pl.touk.nussknacker.engine.flink.api.process.{BasicFlinkSource, FlinkSink, FlinkSource, FlinkSourceFactory}
+import pl.touk.nussknacker.engine.flink.api.process.{BasicFlinkSink, BasicFlinkSource, FlinkSink, FlinkSource, FlinkSourceFactory}
 import pl.touk.nussknacker.engine.flink.util.metrics.InstantRateMeter
 
 class GeneratingSource(size: Int) extends SourceFunction[Model] with LazyLogging {
@@ -44,7 +44,7 @@ object WriteSinkFunction extends SinkFunction[Any] with LazyLogging {
   }
 }
 
-object WriteSink extends FlinkSink {
+object WriteSink extends BasicFlinkSink {
   override def toFlinkFunction: SinkFunction[Any] = WriteSinkFunction
 
   override def testDataOutput: Option[Any => String] = None
